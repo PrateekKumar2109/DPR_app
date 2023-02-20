@@ -73,7 +73,7 @@ if "past" not in st.session_state:
 placeholder = st.empty()
 def get_text():
     
-    input_text = placeholder.text_input("You: ", value="",  key="input")
+    input_text = placeholder.text_input("The: ", value="",  key="input")
     return input_text
 
 
