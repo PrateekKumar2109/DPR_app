@@ -1,1 +1,1 @@
-gatherUsageStats = false
+browser.gatherUsageStats = false
