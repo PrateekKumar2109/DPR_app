@@ -8,10 +8,11 @@ import os
 
 
 # loader = UnstructuredFileLoader("state_of_the_union.txt")
-def embed_doc():
+def embed_doc(data_input):
     #check data folder is not empty
-    if len(os.listdir("data")) > 0:
-        loader = DirectoryLoader('data', glob="**/*.*")
+    #if len(os.listdir("data")) > 0:
+        loader = UnstructuredFileLoader(data_input)
+        #loader = DirectoryLoader('data', glob="**/*.*")
         raw_documents = loader.load()
         print(len(raw_documents))
         # Split text
