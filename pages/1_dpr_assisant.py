@@ -9,7 +9,7 @@ from langchain.embeddings import OpenAIEmbeddings,CohereEmbeddings
 import pickle
 import os
 from langchain.llms import OpenAI
-from embedd import embed_doc
+#from embedd import embed_doc
 from query_data import _template, CONDENSE_QUESTION_PROMPT, QA_PROMPT, get_chain
 import pickle
 import os
