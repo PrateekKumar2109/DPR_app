@@ -24,9 +24,9 @@ uploaded_file = st.file_uploader("Upload a document you would like to chat about
 def embed_doc(data_input):
     #check data folder is not empty
     if len(os.listdir("data")) > 0:
-        loader = UnstructuredFileLoader()
+        loader = UnstructuredFileLoader(data_input)
         #loader = DirectoryLoader('data', glob="**/*.*")
-        raw_documents = loader.load(data_input)
+        raw_documents = loader.load()
         print(len(raw_documents))
         # Split text
         text_splitter = RecursiveCharacterTextSplitter(
