@@ -21,11 +21,11 @@ st.header("Assistant Driller Demo")
 uploaded_file = st.file_uploader("Upload a document you would like to chat about", type=None, accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
 
 # check if file is uploaded and file does not exist in data folder
-def embed_doc(data_input):
+def embed_doc():
     #check data folder is not empty
     if len(os.listdir("data")) > 0:
-        loader = UnstructuredFileLoader(data_input)
-        #loader = DirectoryLoader('data', glob="**/*.*")
+        #loader = UnstructuredFileLoader(data_input)
+        loader = DirectoryLoader('data', glob="**/*.*")
         raw_documents = loader.load()
         print(len(raw_documents))
         # Split text
