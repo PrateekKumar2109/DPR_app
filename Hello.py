@@ -5,7 +5,7 @@ st.set_page_config(
 )
 #st.title(" NLP app for OIl & Gas Drilling Data")
 
-#st.header(" Welcome to O & G Made Easy! 👋")
+#st.header(" Welcome to O & G Assistants! 👋")
 st.header(" Welcome  👋")
 st.sidebar.success("Select a demo above.")
 st.markdown(
