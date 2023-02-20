@@ -2,6 +2,12 @@
 import streamlit as st
 from streamlit_chat import message
 
+from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
+from langchain.document_loaders import UnstructuredFileLoader, DirectoryLoader
+from langchain.vectorstores.faiss import FAISS
+from langchain.embeddings import OpenAIEmbeddings,CohereEmbeddings
+import pickle
+import os
 from langchain.llms import OpenAI
 from embedd import embed_doc
 from query_data import _template, CONDENSE_QUESTION_PROMPT, QA_PROMPT, get_chain
@@ -15,13 +21,40 @@ st.header("Assistant Driller Demo")
 uploaded_file = st.file_uploader("Upload a document you would like to chat about", type=None, accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
 
 # check if file is uploaded and file does not exist in data folder
-if uploaded_file is not None and uploaded_file.name not in os.listdir("data"):
-    # write the file to data directory
-    with open("data/" + uploaded_file.name, "wb") as f:
-        f.write(uploaded_file.getbuffer())
-    st.write("File uploaded successfully")
-    with st.spinner('Document is being vectorized...'):
-        embed_doc()
+def embed_doc(data_input):
+    #check data folder is not empty
+    #if len(os.listdir("data")) > 0:
+        loader = UnstructuredFileLoader(data_input)
+        #loader = DirectoryLoader('data', glob="**/*.*")
+        raw_documents = loader.load()
+        print(len(raw_documents))
+        # Split text
+        text_splitter = RecursiveCharacterTextSplitter(
+            # Set a really small chunk size, just to show.
+            chunk_size = 1000,
+            chunk_overlap  = 0,
+            length_function = len,
+        )
+        print("111")
+        documents = text_splitter.split_documents(raw_documents)
+
+
+        # Load Data to vectorstore
+        embeddings = CohereEmbeddings()
+        print("222")
+        vectorstore = FAISS.from_documents(documents, embeddings)
+        print("333")
+
+        return vectorstore
+vectorstore=embed_doc(uploded_file)
+        # Save vectorstore
+        # check if vectorstore.pkl exists
+with open("vectorstore.pkl", "wb") as f:
+            pickle.dump(vectorstore, f)
+
+
+
+
 # open vectorstore.pkl if it exists in current directory
 if "vectorstore.pkl" in os.listdir("."):
     with open("vectorstore.pkl", "rb") as f:
