@@ -46,7 +46,7 @@ def embed_doc():
         print("333")
 
     return vectorstore
-vectorstore=embed_doc(uploaded_file)
+vectorstore=embed_doc()
         # Save vectorstore
         # check if vectorstore.pkl exists
 with open("vectorstore.pkl", "wb") as f:
