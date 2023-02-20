@@ -23,7 +23,7 @@ uploaded_file = st.file_uploader("Upload a document you would like to chat about
 # check if file is uploaded and file does not exist in data folder
 def embed_doc(data_input):
     #check data folder is not empty
-    #if len(os.listdir("data")) > 0:
+    if len(os.listdir("data")) > 0:
         loader = UnstructuredFileLoader()
         #loader = DirectoryLoader('data', glob="**/*.*")
         raw_documents = loader.load(data_input)
@@ -45,7 +45,7 @@ def embed_doc(data_input):
         vectorstore = FAISS.from_documents(documents, embeddings)
         print("333")
 
-        return vectorstore
+    return vectorstore
 vectorstore=embed_doc(uploaded_file)
         # Save vectorstore
         # check if vectorstore.pkl exists
